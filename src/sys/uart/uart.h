@@ -1,46 +1,35 @@
-#ifndef _UART_H_
-#define _UART_H_
+#ifndef _DrvUsart1_h_
+#define _DrvUsart1_h_
 
 #include "pub.h"
+#include <string.h>
+#include "BspTime3.h"
 
-//串口配置，3个串口同时只支持一个
+#define USART1_BUFF_LANGTH     1048
 
-#define TX_LENGTH      128  //发送数组大小
-#define RX_LENGTH      1280 //接收数组大小
 
-typedef struct
-{
-    u8 TxdBuf[TX_LENGTH];  //串口发送缓冲
-    u8 RxdBuf[RX_LENGTH];  //串口接收缓冲
-    u8 RxdIndex;           //串口接收数据个数
-    FlagStatus RxdState;           //串口接收状态
-}_DEF_Uart;
+typedef struct {
+    bool volatile eTXIdle;    
+    bool volatile eRXIdle;    
+	u32 len;
+	u16 ind;	
+	u8  buf[USART1_BUFF_LANGTH];
+}SerialBuffType;		//发送暂存区
 
-extern _DEF_Uart Usart;
+#define SerialBuffDefault {FALSE,FALSE,0,0,{0,}}
 
-#define UART_PORT       1       //定义串口号
 
-#define UART_BAUDRATE  115200   //定义串口波特率
+void BspUsart1Init(void);
+void BspUsart1Close(void);
 
-#if UART_PORT == 1
-    #define UARTX 				    USART1
-    #define UARTX_IRQ 			    USART1_IRQn
-    #define UARTX_DMA_IRQ           DMA1_Channel4_IRQn
-    #define UARTX_DMA_Channel       DMA1_Channel4
-#elif UART_PORT == 2
-    #define UARTX 				    USART2
-    #define UARTX_IRQ 			    USART2_IRQn
-    #define UARTX_DMA_IRQ           DMA1_Channel7_IRQn
-    #define UARTX_DMA_Channel       DMA1_Channel7 
-#elif UART_PORT == 3
-    #define UARTX 				    USART3
-    #define UARTX_IRQ 			    USART3_IRQn
-    #define UARTX_DMA_IRQ           DMA1_Channel2_IRQn
-    #define UARTX_DMA_Channel       DMA1_Channel2    
-#endif
+u16 BspUsart1Send(u8 *buf, u16 len);
+u16 BspUsart1Receive(u8 *buf);
 
-void USART_Configuration(void);
-void USARTx_SendBuf(u8* data,uint16_t len);
+u8 Usart1ReceiveByte(void);
+void BspUsart1IRQCallBack(void *fun);
+
 
 #endif
+/********************** END ***************************************************/
+
 

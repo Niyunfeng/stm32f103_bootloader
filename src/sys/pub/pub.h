@@ -12,6 +12,8 @@
 #define BYTE2(dwTemp)       (*((char *)(&dwTemp) + 2))
 #define BYTE3(dwTemp)       (*((char *)(&dwTemp) + 3))
 
+typedef enum {FALSE = 0, TRUE = !FALSE} bool;
+
 #define ARRAY_SIZE(array) (sizeof(array) / sizeof(array[0]))
 
 //IO口操作宏定义
@@ -121,5 +123,12 @@ void Pub_Gpio_Input_AIN(GPIO_TypeDef* GPIOx,uint16_t Pin);                  //设
 void Pub_Gpio_Input_IPD(GPIO_TypeDef* GPIOx,uint16_t Pin);                  //设置端口为下拉输入口
 void Pub_Gpio_Input_INFLOATING(GPIO_TypeDef* GPIOx,uint16_t Pin);           //设置端口为浮空输入口
 void Pub_Gpio_Input_IPU(GPIO_TypeDef* GPIOx,uint16_t Pin);                  //设置端口为上拉输入口
+
+
+//以下为汇编函数
+void WFI_SET(void);		//执行WFI指令
+void INTX_DISABLE(void);//关闭所有中断
+void INTX_ENABLE(void);	//开启所有中断
+void MSR_MSP(u32 addr);	//设置堆栈地址
 
 #endif

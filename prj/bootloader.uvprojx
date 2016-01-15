@@ -373,7 +373,7 @@
               <MiscControls></MiscControls>
               <Define></Define>
               <Undefine></Undefine>
-              <IncludePath>..\src\sys\delay;..\src\sys\pub;..\src\sys\uart;..\src\sys\led</IncludePath>
+              <IncludePath>..\src\sys\delay;..\src\sys\pub;..\src\sys\uart;..\src\sys\led;..\src\sys\timer;..\src\app\ymodem;..\src\app\comm;..\src\app\download</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -426,6 +426,21 @@
               <FileType>1</FileType>
               <FilePath>..\src\app\bsp.c</FilePath>
             </File>
+            <File>
+              <FileName>common.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\src\app\comm\common.c</FilePath>
+            </File>
+            <File>
+              <FileName>download.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\src\app\download\download.c</FilePath>
+            </File>
+            <File>
+              <FileName>ymodem.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\src\app\ymodem\ymodem.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -437,9 +452,9 @@
               <FilePath>..\src\sys\pub\pub.c</FilePath>
             </File>
             <File>
-              <FileName>delay.c</FileName>
+              <FileName>led.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\src\sys\delay\delay.c</FilePath>
+              <FilePath>..\src\sys\led\led.c</FilePath>
             </File>
             <File>
               <FileName>uart.c</FileName>
@@ -447,9 +462,14 @@
               <FilePath>..\src\sys\uart\uart.c</FilePath>
             </File>
             <File>
-              <FileName>led.c</FileName>
+              <FileName>BspTime2.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\src\sys\led\led.c</FilePath>
+              <FilePath>..\src\sys\timer\BspTime2.c</FilePath>
+            </File>
+            <File>
+              <FileName>BspTime3.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\src\sys\timer\BspTime3.c</FilePath>
             </File>
           </Files>
         </Group>

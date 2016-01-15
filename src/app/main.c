@@ -1,33 +1,26 @@
 #include "pub.h"
+#include "common.h"
 #include "led.h"
-#include "uart.h"
-#include "delay.h"
 
-void BSP_Init(void);
-
-u8 data[] = "0123456789\r\n";
+void BspInit(void);
 
 int main(void)
 {		
-    BSP_Init();
-    delay_init();
-    USART_Configuration();
-    led_init();
-    led_on(0);  led_on(1);
+    u8 flg = 0;
+    
+    BspInit();
+    CommonInit();
+
     while(1)
     {
-        if(Usart.RxdState == SET)
+        CommonExec();
+        if (IS_TIMEOUT_1MS(eTim1, 500))
         {
-            Usart.RxdState = RESET;
-            USARTx_SendBuf(Usart.RxdBuf,Usart.RxdIndex);
+            flg? led_on(0): led_off(0);
+            flg = !flg;
         }
     };
 }
-
-
-
-
-
 
 
 

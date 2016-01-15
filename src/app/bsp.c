@@ -1,5 +1,8 @@
 #include "pub.h"
+#include "BspTime2.h"
+#include "BspTime3.h"
 #include "uart.h"
+#include "led.h"
 
 static __inline void RCC_Configuration(void)
 {
@@ -28,6 +31,8 @@ static __inline void RCC_Configuration(void)
   	}    
     RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOA | RCC_APB2Periph_GPIOB | RCC_APB2Periph_GPIOC 
                           |RCC_APB2Periph_GPIOD | RCC_APB2Periph_GPIOE | RCC_APB2Periph_GPIOF, ENABLE);
+    RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM2 | RCC_APB1Periph_TIM3, ENABLE);
+    
 }
 
 static __inline void NVIC_Configuration(void)
@@ -43,14 +48,25 @@ static __inline void NVIC_Configuration(void)
 	#endif
 	NVIC_PriorityGroupConfig(NVIC_PriorityGroup_2);   
     
-    Pub_Nvic_Config(UARTX_IRQ, 0, 0);   //串口1中断配置
-    Pub_Nvic_Config(UARTX_DMA_IRQ,1,0); //串口1发送DMA中断配置
+    Pub_Nvic_Config(TIM3_IRQn,6,0);
+    Pub_Nvic_Config(TIM2_IRQn,10,0);
+    Pub_Nvic_Config(USART1_IRQn,10,0);
 }
 
-void BSP_Init(void)
+void BspClose(void)
+{
+    BspTim2Close();
+    BspTim3Close();
+    BspUsart1Close();
+}
+
+void BspInit(void)
 {
     RCC_Configuration();
-    NVIC_Configuration();
+    NVIC_Configuration();	//中断优先级设置
+
+    led_init();
+    BspTim2Init();
+    BspTim3Init();
+    BspUsart1Init();
 }
-
-
